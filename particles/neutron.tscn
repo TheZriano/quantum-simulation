@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://bameq3kutjnmr"]
+
+[ext_resource type="Script" uid="uid://cycems8gn2vsg" path="res://particles/neutron.gd" id="1_lidmp"]
+[ext_resource type="Texture2D" uid="uid://efqg4j1br22x" path="res://imgs/neutron.png" id="2_t7a2d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xpuwr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oixoy"]
+radius = 500.001
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8pa3r"]
+radius = 50.0
+
+[node name="neutron" type="RigidBody2D"]
+mass = 10.0
+gravity_scale = 0.0
+script = ExtResource("1_lidmp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xpuwr")
+debug_color = Color(1, 0, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_t7a2d")
+
+[node name="chargeBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chargeBox"]
+shape = SubResource("CircleShape2D_oixoy")
+one_way_collision_margin = 0.0
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="nuclearForce" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="nuclearForce"]
+shape = SubResource("CircleShape2D_8pa3r")
+debug_color = Color(1, 0, 0, 0)
+
+[connection signal="body_entered" from="chargeBox" to="." method="_on_charge_box_body_entered"]
+[connection signal="body_exited" from="chargeBox" to="." method="_on_charge_box_body_exited"]
+[connection signal="body_entered" from="nuclearForce" to="." method="_on_nuclear_force_body_entered"]
+[connection signal="body_exited" from="nuclearForce" to="." method="_on_nuclear_force_body_exited"]

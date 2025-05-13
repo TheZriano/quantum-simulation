@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://4gxa70sgmh2x"]
+
+[ext_resource type="Texture2D" uid="uid://cbtluxajwrxnq" path="res://imgs/proton.png" id="1_cn4ku"]
+[ext_resource type="Script" uid="uid://clq2ja5x6udrd" path="res://particles/proton.gd" id="1_xpuwr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xpuwr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oixoy"]
+radius = 500.001
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8pa3r"]
+radius = 50.0
+
+[node name="proton" type="RigidBody2D"]
+mass = 10.0
+gravity_scale = 0.0
+script = ExtResource("1_xpuwr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xpuwr")
+debug_color = Color(1, 0, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_cn4ku")
+
+[node name="chargeBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chargeBox"]
+shape = SubResource("CircleShape2D_oixoy")
+one_way_collision_margin = 0.0
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="nuclearForce" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="nuclearForce"]
+shape = SubResource("CircleShape2D_8pa3r")
+debug_color = Color(1, 0, 0, 0)
+
+[connection signal="body_entered" from="chargeBox" to="." method="_on_charge_box_body_entered"]
+[connection signal="body_exited" from="chargeBox" to="." method="_on_charge_box_body_exited"]
+[connection signal="body_entered" from="nuclearForce" to="." method="_on_nuclear_force_body_entered"]
+[connection signal="body_exited" from="nuclearForce" to="." method="_on_nuclear_force_body_exited"]

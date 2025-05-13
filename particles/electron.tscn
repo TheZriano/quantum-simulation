@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqx5lrce3801f"]
+
+[ext_resource type="Texture2D" uid="uid://bboperapd3tbw" path="res://imgs/electron.png" id="1_n8eag"]
+[ext_resource type="Script" uid="uid://dadtv33kkilw0" path="res://particles/electron.gd" id="1_yn7ih"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xpuwr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oixoy"]
+radius = 500.001
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yn7ih"]
+radius = 50.0
+
+[node name="electron" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource("1_yn7ih")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xpuwr")
+debug_color = Color(0, 0, 1, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_n8eag")
+
+[node name="chargeBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chargeBox"]
+shape = SubResource("CircleShape2D_oixoy")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="repulsiveForce" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="repulsiveForce"]
+shape = SubResource("CircleShape2D_yn7ih")
+debug_color = Color(1, 0, 0, 0)
+
+[connection signal="body_entered" from="chargeBox" to="." method="_on_charge_box_body_entered"]
+[connection signal="body_exited" from="chargeBox" to="." method="_on_charge_box_body_exited"]
+[connection signal="body_shape_entered" from="repulsiveForce" to="." method="_on_repulsive_force_body_shape_entered"]
+[connection signal="body_shape_exited" from="repulsiveForce" to="." method="_on_repulsive_force_body_shape_exited"]
